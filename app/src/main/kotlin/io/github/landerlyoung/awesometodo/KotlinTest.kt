@@ -9,7 +9,12 @@ package io.github.landerlyoung.awesometodo
  * </pre>
  */
 
-class KotlinTest {
+open class KotlinTest {
+    private val log = StringBuilder()
+
+    val logMsg
+        get() = log.toString()
+
     fun run() {
         val clazz = KotlinTest::class.java
         clazz.declaredMethods
@@ -20,10 +25,14 @@ class KotlinTest {
                 }
     }
 
+    internal fun println(msg: String) {
+        log.append(msg).append('\n')
+    }
+
     @Test
     fun helloWorld() {
         println("Hello World").hashCode()
         println("${KotlinTest::class}:${KotlinTest::class.java}:${this.javaClass}")
-    }
 
+    }
 }
