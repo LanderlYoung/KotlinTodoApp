@@ -6,13 +6,14 @@ import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import io.github.landerlyoung.awesometodo.test.KotlinTest
 
 class MainActivity : Activity() {
     companion object {
         const val TAG = "MainActivity"
     }
 
-    private lateinit var log: TextView
+    private var log: TextView? = null
     private var someDialog: Lazy<Dialog> = lazy {
 
         Log.i(TAG, "lazy create some Dialog")
@@ -21,10 +22,6 @@ class MainActivity : Activity() {
                 .setMessage("test finished")
                 .setPositiveButton("ok", null)
                 .create()
-    }
-
-    private val delegateLazyDialog by lazy {
-        Dialog(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +42,7 @@ class MainActivity : Activity() {
     fun runTest() {
         val test = KotlinTest()
         test.run()
-        log.text = test.logMsg
+        log?.text = test.logMsg
 
         someDialog.value.show()
     }
