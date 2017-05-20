@@ -2,9 +2,15 @@ package io.github.landerlyoung.awesometodo.arch.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
+import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.databinding.ObservableList
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
+import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
 import io.github.landerlyoung.awesometodo.kotlin.extension.getValue
 import io.github.landerlyoung.awesometodo.kotlin.extension.setValue
 
@@ -16,19 +22,26 @@ import io.github.landerlyoung.awesometodo.kotlin.extension.setValue
  * Life with Passion, Code with Creativity.
  * </pre>
  */
-class TodoViewModel(application: Application) : AndroidViewModel(application) {
-    private val newTodoItem = TodoItemViewModel(this.getApplication())
-
-    var newItemName by ObservableField<CharSequence>()
-    var newItemDone by ObservableBoolean()
-
-
+class TodoViewModel(application: Application) : AndroidViewModel(application), LifecycleObserver {
     private val todoDao by lazy {
         // maybe use dagger to inject
         TodoDataBase.getOrCreateDb(getApplication()).todoDao()
     }
 
-    fun getAllTodoItems() {
+    var newItemName by ObservableField<CharSequence>()
+    var newItemDone by ObservableBoolean()
+    var allItems = ObservableArrayList<TodoEntity>()
 
+    fun addNewItem() {
+
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun fetchData() {
+
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun release() {
     }
 }

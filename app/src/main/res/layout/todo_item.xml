@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="io.github.landerlyoung.awesometodo.arch.viewmodel.TodoItemViewModel"
+            />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        >
+
+        <!--<CheckBox-->
+            <!--android:id="@+id/done"-->
+            <!--android:layout_width="48dp"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:checked="@={viewModel.done}"-->
+            <!--android:gravity="center"-->
+            <!--/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_toEndOf="@+id/done"-->
+
+            <!--android:gravity="center_vertical"-->
+            <!--android:hint="@string/tap_to_add"-->
+            <!--android:text="@{viewModel.name}"-->
+            <!--/>-->
+    </RelativeLayout>
+</layout>

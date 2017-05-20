@@ -12,16 +12,17 @@
         android:id="@+id/log"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/run_demo"
+        android:layout_above="@+id/run_test"
         android:layout_alignParentTop="true"
         android:textSize="18sp"
         />
+
 
     <Button
         android:id="@+id/run_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/run_demo"
         android:text="Run Test"
         />
 
@@ -29,8 +30,9 @@
         android:id="@+id/run_demo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/run_test"
+        android:layout_alignParentBottom="true"
         android:text="goto demo"
         />
+
 </RelativeLayout>
 
