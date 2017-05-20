@@ -1,14 +1,16 @@
 package io.github.landerlyoung.awesometodo
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.TextView
+import io.github.landerlyoung.awesometodo.arch.ui.TodoActivity
 import io.github.landerlyoung.awesometodo.test.KotlinTest
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
     companion object {
         const val TAG = "MainActivity"
     }
@@ -28,9 +30,14 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        log = findViewById(R.id.log) as TextView
-        findViewById(R.id.run_test).setOnClickListener {
+        log = findViewById(R.id.log) as? TextView
+        findViewById(R.id.run_test)?.setOnClickListener {
             runTest()
+        }
+
+        findViewById(R.id.run_demo)?.setOnClickListener {
+            val intent = Intent(this, TodoActivity::class.java)
+            startActivity(intent)
         }
     }
 

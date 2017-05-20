@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Awesome Todo</string>
+    <string name="tap_to_add">tap to add new todo item</string>
 </resources>

@@ -20,7 +20,7 @@ open class KotlinTest {
     fun run() {
         val clazz = io.github.landerlyoung.awesometodo.test.KotlinTest::class.java
         clazz.declaredMethods
-                .filter { it.getAnnotation(io.github.landerlyoung.awesometodo.Test::class.java) != null }
+                .filter { it.getAnnotation(Test::class.java) != null }
                 .forEach {
                     println(it.name)
                     it.invoke(this)

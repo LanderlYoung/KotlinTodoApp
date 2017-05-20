@@ -2,10 +2,6 @@ package io.github.landerlyoung.awesometodo.test;
 
 import java.util.List;
 
-import io.github.landerlyoung.awesometodo.KotlinEnum;
-import io.github.landerlyoung.awesometodo.KotlinTest;
-import io.github.landerlyoung.awesometodo.User;
-
 /**
  * <pre>
  * Author: taylorcyang@tencent.com

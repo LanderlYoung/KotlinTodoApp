@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
+// kotlin annotation processor
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -22,7 +25,7 @@ android {
     }
 
     dataBinding {
-        enabled false
+        enabled true
     }
 
     buildTypes {
@@ -33,12 +36,33 @@ android {
     }
 }
 
+afterEvaluate {
+    // fix bug with DataBinding circular task dependency
+    android.applicationVariants.each { variant ->
+        tasks["dataBindingExportBuildInfo${variant.name.capitalize()}"].dependsOn = []
+    }
+}
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile "com.android.support:support-v4:25.3.1"
+    compile "com.android.support:recyclerview-v7:25.3.1"
+
+    // google android architecture component
+    def archVersion = '1.0.0-alpha1'
+    compile "android.arch.lifecycle:extensions:${archVersion}"
+    kapt "android.arch.lifecycle:compiler:${archVersion}"
+    // room and room-rxjava2 extension
+    compile "android.arch.persistence.room:runtime:${archVersion}"
+    compile "android.arch.persistence.room:rxjava2:${archVersion}"
+    kapt "android.arch.persistence.room:compiler:${archVersion}"
 
     // for test only
     testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
