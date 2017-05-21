@@ -76,6 +76,7 @@ object TodoUI {
                 else -> false
             }
         }
+
         viewMode.newItemName.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             @Suppress("UncheckedCast")
             override fun onPropertyChanged(p0: Observable?, p1: Int) {

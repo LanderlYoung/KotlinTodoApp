@@ -50,7 +50,7 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
                         adapter.todoItems.clear()
                         adapter.todoItems.addAll(list)
 
-                        for (position in index..(index + count)) {
+                        for (position in index until (index + count)) {
                             adapter.notifyItemInserted(position)
                         }
                     }
@@ -85,7 +85,7 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
         val todoItems: MutableList<TodoEntity> = mutableListOf()
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-            val vm = ViewModelProviders.of(this@TodoFragment).get(TodoItemViewModel::class.java)
+            val vm = TodoItemViewModel(activity.application)
             val view = TodoItemViewUI.inflate(
                     LayoutInflater.from(context),
                     parent,
