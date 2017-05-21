@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="viewModel"
             type="io.github.landerlyoung.awesometodo.arch.viewmodel.TodoItemViewModel"
@@ -14,23 +13,25 @@
         android:layout_height="48dp"
         >
 
-        <!--<CheckBox-->
-            <!--android:id="@+id/done"-->
-            <!--android:layout_width="48dp"-->
-            <!--android:layout_height="48dp"-->
-            <!--android:checked="@={viewModel.done}"-->
-            <!--android:gravity="center"-->
-            <!--/>-->
+        <CheckBox
+            android:id="@+id/new_item_done"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:checked="@={viewModel.done}"
+            android:gravity="center"
+            />
 
-        <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="48dp"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_toEndOf="@+id/done"-->
+        <TextView
+            android:id="@+id/name"
 
-            <!--android:gravity="center_vertical"-->
-            <!--android:hint="@string/tap_to_add"-->
-            <!--android:text="@{viewModel.name}"-->
-            <!--/>-->
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/new_item_done"
+
+            android:gravity="center_vertical"
+            android:hint="@string/tap_to_add"
+            android:text="@{viewModel.name}"
+            />
     </RelativeLayout>
 </layout>

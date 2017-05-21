@@ -3,10 +3,8 @@ package io.github.landerlyoung.awesometodo.arch.ui
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableList
-import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -14,11 +12,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.github.landerlyoung.awesometodo.R
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
 import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoItemViewModel
 import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoViewModel
-import io.github.landerlyoung.awesometodo.databinding.ActivityTodoBinding
-import io.github.landerlyoung.awesometodo.databinding.TodoItemBinding
 
 /**
  * <pre>
@@ -30,6 +27,7 @@ import io.github.landerlyoung.awesometodo.databinding.TodoItemBinding
  */
 class TodoFragment : Fragment(), LifecycleRegistryOwner {
     private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
+    private lateinit var adapter: Adapter
 
     override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
 
@@ -37,57 +35,57 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val binding = ActivityTodoBinding.inflate(
-                inflater, container, false)
         val vm = ViewModelProviders.of(this).get(TodoViewModel::class.java)
+        val view = TodoUI.inflate(inflater, container, false, vm)
+        adapter = Adapter()
+        adapter.todoItems.addAll(vm.allItems)
 
-        binding.viewModel = vm
-
-        binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        binding.recyclerView.adapter = Adapter()
+        val recyclerView = view.findViewById(R.id.recycler_view) as? RecyclerView
+        recyclerView?.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        recyclerView?.adapter = adapter
 
         vm.allItems.addOnListChangedCallback(
                 object : ObservableList.OnListChangedCallback<ObservableArrayList<TodoEntity>>() {
-                    override fun onItemRangeInserted(p0: ObservableArrayList<TodoEntity>, p1: Int, p2: Int) {
+                    override fun onItemRangeInserted(list: ObservableArrayList<TodoEntity>, index: Int, count: Int) {
+                        assert(count == 1) { " only deal with one by one insert" }
                     }
 
-                    override fun onChanged(p0: ObservableArrayList<TodoEntity>) {
+                    override fun onChanged(list: ObservableArrayList<TodoEntity>) {
                     }
 
-                    override fun onItemRangeMoved(p0: ObservableArrayList<TodoEntity>, p1: Int, p2: Int, p3: Int) {
+                    override fun onItemRangeMoved(list: ObservableArrayList<TodoEntity>, from: Int, to: Int, count: Int) {
                     }
 
-                    override fun onItemRangeRemoved(p0: ObservableArrayList<TodoEntity>, p1: Int, p2: Int) {
+                    override fun onItemRangeRemoved(list: ObservableArrayList<TodoEntity>, index: Int, count: Int) {
                     }
 
-                    override fun onItemRangeChanged(p0: ObservableArrayList<TodoEntity>, p1: Int, p2: Int) {
+                    override fun onItemRangeChanged(list: ObservableArrayList<TodoEntity>, index: Int, count: Int) {
                     }
                 })
 
-        return binding.root
+        return view
     }
 
-    class ViewHolder(view: View, val vm: TodoItemViewModel) : RecyclerView.ViewHolder(view)
+    private class ViewHolder(view: View, val vm: TodoItemViewModel) : RecyclerView.ViewHolder(view)
 
-    inner class Adapter : RecyclerView.Adapter<ViewHolder>() {
-        val todoItems: List<TodoEntity> = ArrayList()
+    private inner class Adapter : RecyclerView.Adapter<ViewHolder>() {
+        val todoItems: MutableList<TodoEntity> = mutableListOf()
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-            val binding = TodoItemBinding.inflate(LayoutInflater.from(context), parent, false)
             val vm = ViewModelProviders.of(this@TodoFragment).get(TodoItemViewModel::class.java)
+            val view = TodoItemViewUI.inflate(
+                    LayoutInflater.from(context),
+                    parent,
+                    false,
+                    vm)
 
-            binding.viewModel = vm
-
-            return ViewHolder(binding.root, vm)
+            return ViewHolder(view, vm)
         }
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
             val item = todoItems[position]
-            viewHolder.vm.name = item.name
-            viewHolder.vm.done = item.done
-
-            DataBindingUtil.getBinding<ViewDataBinding>(viewHolder.itemView)
-                    ?.executePendingBindings()
+            viewHolder.vm.name.set(item.name)
+            viewHolder.vm.done.set(item.done)
         }
 
         override fun getItemCount(): Int {

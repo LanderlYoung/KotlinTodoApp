@@ -8,11 +8,8 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import android.databinding.ObservableList
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
-import io.github.landerlyoung.awesometodo.kotlin.extension.getValue
-import io.github.landerlyoung.awesometodo.kotlin.extension.setValue
 
 /**
  * <pre>
@@ -28,9 +25,13 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
         TodoDataBase.getOrCreateDb(getApplication()).todoDao()
     }
 
-    var newItemName by ObservableField<CharSequence>()
-    var newItemDone by ObservableBoolean()
-    var allItems = ObservableArrayList<TodoEntity>()
+    val newItemName = ObservableField<CharSequence>()
+    val newItemDone = ObservableBoolean()
+    val allItems = ObservableArrayList<TodoEntity>()
+
+    init {
+        allItems.add(TodoEntity("sssss", true, 0, 0))
+    }
 
     fun addNewItem() {
 

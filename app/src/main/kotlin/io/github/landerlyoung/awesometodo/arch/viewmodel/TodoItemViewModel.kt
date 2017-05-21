@@ -4,8 +4,6 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import io.github.landerlyoung.awesometodo.kotlin.extension.getValue
-import io.github.landerlyoung.awesometodo.kotlin.extension.setValue
 
 /**
  * <pre>
@@ -16,6 +14,6 @@ import io.github.landerlyoung.awesometodo.kotlin.extension.setValue
  * </pre>
  */
 class TodoItemViewModel(application: Application) : AndroidViewModel(application) {
-    var name by ObservableField<CharSequence>()
-    var done by ObservableBoolean()
+    val name = ObservableField<CharSequence>()
+    val done = ObservableBoolean()
 }

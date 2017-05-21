@@ -20,7 +20,7 @@
         >
 
         <CheckBox
-            android:id="@+id/done"
+            android:id="@+id/new_item_done"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:gravity="center"
@@ -28,9 +28,10 @@
             />
 
         <EditText
+            android:id="@+id/new_item_name"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_toEndOf="@+id/done"
+            android:layout_toEndOf="@+id/new_item_done"
             android:layout_toStartOf="@+id/add"
 
             android:gravity="center_vertical"
@@ -53,8 +54,8 @@
             android:id="@+id/split_line"
             android:layout_below="@+id/add"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@android:color/background_dark"
+            android:layout_height="4dp"
+            android:background="#aaaaaaaa"
             />
 
         <android.support.v7.widget.RecyclerView
