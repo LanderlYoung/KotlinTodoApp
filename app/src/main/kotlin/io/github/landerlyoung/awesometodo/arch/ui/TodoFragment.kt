@@ -37,6 +37,7 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
 
         val vm = ViewModelProviders.of(this).get(TodoViewModel::class.java)
         val view = TodoUI.inflate(inflater, container, false, vm)
+        lifecycleRegistry.addObserver(vm)
         adapter = Adapter()
         adapter.todoItems.addAll(vm.allItems)
 

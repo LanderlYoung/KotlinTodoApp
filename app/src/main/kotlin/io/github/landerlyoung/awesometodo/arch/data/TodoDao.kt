@@ -1,7 +1,7 @@
 package io.github.landerlyoung.awesometodo.arch.data
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
+import io.reactivex.Flowable
 
 /**
  * <pre>
@@ -25,7 +25,7 @@ abstract class TodoDao {
 
     /** query all items synchronized */
     @Query("SELECT * FROM ${TodoEntity.TABLE_NAME}")
-    abstract fun allItems(): LiveData<List<TodoEntity>>
+    abstract fun allItems(): Flowable<List<TodoEntity>>
 
     @Query("SELECT COUNT(*) FROM ${TodoEntity.TABLE_NAME}")
     abstract fun todoItems(): Int

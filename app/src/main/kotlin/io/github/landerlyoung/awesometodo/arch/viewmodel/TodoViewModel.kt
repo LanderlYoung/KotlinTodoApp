@@ -12,6 +12,7 @@ import io.github.landerlyoung.awesometodo.AwesomeApplication
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 /**
  * <pre>
@@ -48,7 +49,12 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchData() {
-
+        todoDao.allItems()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { items ->
+                    allItems.clear()
+                    allItems.addAll(items)
+                }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
