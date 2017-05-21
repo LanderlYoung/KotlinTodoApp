@@ -44,7 +44,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
                     todoDao.addItem(entity)
                 }
 
-        allItems.add(entity)
+        allItems.add(0, entity)
 
         newItemName.set(null)
         newItemDone.set(false)
@@ -58,7 +58,8 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
             val newItem = item.copy(done = done, updateTimeMillis = System.currentTimeMillis())
 
             // update memory cache
-            allItems[index] = newItem
+            allItems.removeAt(index)
+            allItems.add(0, newItem)
 
             // update db
             Observable.just(newItem)

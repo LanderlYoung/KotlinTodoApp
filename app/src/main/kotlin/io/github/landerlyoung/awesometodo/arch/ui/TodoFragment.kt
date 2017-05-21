@@ -57,16 +57,6 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
             override fun onSwiped(v: RecyclerView.ViewHolder, dir: Int) {
                 todoViewMode.removeItem(v.adapterPosition)
             }
-
-            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-                super.onSelectedChanged(viewHolder, actionState)
-            }
-
-            override fun clearView(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) {
-                super.clearView(recyclerView, viewHolder)
-            }
-
-
         }).attachToRecyclerView(recyclerView)
 
         vm.allItems.addOnListChangedCallback(

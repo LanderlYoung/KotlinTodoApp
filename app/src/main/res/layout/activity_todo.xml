@@ -38,6 +38,7 @@
             android:hint="@string/tap_to_add"
             android:text="@={viewModel.newItemName}"
             android:maxLines="1"
+            android:inputType="textShortMessage"
             android:imeOptions="actionSend"
             />
 

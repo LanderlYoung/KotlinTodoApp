@@ -56,7 +56,7 @@ object TodoUI {
         newItem?.setText(viewMode.newItemName.get())
         newItem?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val newString = s?.toString()
+                val newString = newItem.text?.toString()
                 val old = viewMode.newItemName.get()
 
                 if (old != newString) {
@@ -73,8 +73,13 @@ object TodoUI {
         })
 
         val addNewItem: () -> Unit = {
-            if (!viewMode.addNewItem()) {
-                Snackbar.make(newItem!!, "Item Already Exist", Snackbar.LENGTH_SHORT)
+            if (!viewMode.newItemName.get().isNullOrBlank()) {
+                if (!viewMode.addNewItem()) {
+                    Snackbar.make(newItem!!, "Item Already Exist", Snackbar.LENGTH_SHORT)
+                            .show()
+                }
+            } else {
+                Snackbar.make(newItem!!, "Can't Add Empty Item", Snackbar.LENGTH_SHORT)
                         .show()
             }
         }
