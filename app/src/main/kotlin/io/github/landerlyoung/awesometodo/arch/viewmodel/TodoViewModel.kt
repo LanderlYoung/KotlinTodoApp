@@ -8,8 +8,10 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import io.github.landerlyoung.awesometodo.AwesomeApplication
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
+import io.reactivex.Observable
 
 /**
  * <pre>
@@ -25,19 +27,26 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
         TodoDataBase.getOrCreateDb(getApplication()).todoDao()
     }
 
-    val newItemName = ObservableField<CharSequence>()
+    val newItemName = ObservableField<String>()
     val newItemDone = ObservableBoolean()
     val allItems = ObservableArrayList<TodoEntity>()
 
-    init {
-        allItems.add(TodoEntity("sssss", true, 0, 0))
-    }
-
     fun addNewItem() {
+        val entity = TodoEntity(newItemName.get(), newItemDone.get())
 
+        Observable.just(entity)
+                .subscribeOn(this.getApplication<AwesomeApplication>().ioScheduler)
+                .subscribe({ entity ->
+                    todoDao.addItem(entity)
+                })
+
+        allItems.add(entity)
+
+        newItemName.set(null)
+        newItemDone.set(false)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchData() {
 
     }

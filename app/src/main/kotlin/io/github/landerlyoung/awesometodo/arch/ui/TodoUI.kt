@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
@@ -66,6 +67,15 @@ object TodoUI {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
+        newItem?.setOnEditorActionListener { _, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_SEND -> {
+                    viewMode.addNewItem()
+                    true
+                }
+                else -> false
+            }
+        }
         viewMode.newItemName.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             @Suppress("UncheckedCast")
             override fun onPropertyChanged(p0: Observable?, p1: Int) {

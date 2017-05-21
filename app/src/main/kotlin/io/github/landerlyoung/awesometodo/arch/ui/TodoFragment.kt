@@ -47,19 +47,32 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
         vm.allItems.addOnListChangedCallback(
                 object : ObservableList.OnListChangedCallback<ObservableArrayList<TodoEntity>>() {
                     override fun onItemRangeInserted(list: ObservableArrayList<TodoEntity>, index: Int, count: Int) {
-                        assert(count == 1) { " only deal with one by one insert" }
+                        adapter.todoItems.clear()
+                        adapter.todoItems.addAll(list)
+
+                        for (position in index..(index + count)) {
+                            adapter.notifyItemInserted(position)
+                        }
                     }
 
                     override fun onChanged(list: ObservableArrayList<TodoEntity>) {
                     }
 
                     override fun onItemRangeMoved(list: ObservableArrayList<TodoEntity>, from: Int, to: Int, count: Int) {
+
                     }
 
                     override fun onItemRangeRemoved(list: ObservableArrayList<TodoEntity>, index: Int, count: Int) {
+                        adapter.todoItems.clear()
+                        adapter.todoItems.addAll(list)
+                        adapter.notifyItemRangeRemoved(index, count)
                     }
 
                     override fun onItemRangeChanged(list: ObservableArrayList<TodoEntity>, index: Int, count: Int) {
+                        for (pos in index..(index + count)) {
+                            adapter.todoItems[pos] = list[pos]
+                        }
+                        adapter.notifyItemRangeChanged(index, count)
                     }
                 })
 
