@@ -70,6 +70,12 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
     }
 
     fun removeItem(index: Int): Boolean {
+        val entity = allItems.removeAt(index)
+        Observable.just(entity)
+                .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
+                .subscribe {
+                    todoDao.deleteItem(entity)
+                }
         return false
     }
 

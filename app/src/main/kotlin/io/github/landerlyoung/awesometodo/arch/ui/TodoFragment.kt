@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,26 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
         val recyclerView = view.findViewById(R.id.recycler_view) as? RecyclerView
         recyclerView?.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         recyclerView?.adapter = adapter
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+                0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
+            override fun onMove(p0: RecyclerView?, p1: RecyclerView.ViewHolder?, p2: RecyclerView.ViewHolder?): Boolean {
+                return true
+            }
+
+            override fun onSwiped(v: RecyclerView.ViewHolder, dir: Int) {
+                todoViewMode.removeItem(v.adapterPosition)
+            }
+
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                super.onSelectedChanged(viewHolder, actionState)
+            }
+
+            override fun clearView(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) {
+                super.clearView(recyclerView, viewHolder)
+            }
+
+
+        }).attachToRecyclerView(recyclerView)
 
         vm.allItems.addOnListChangedCallback(
                 object : ObservableList.OnListChangedCallback<ObservableArrayList<TodoEntity>>() {

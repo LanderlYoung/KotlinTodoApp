@@ -24,7 +24,7 @@ abstract class TodoDao {
 
     /** query all items synchronized */
     @Query("SELECT * FROM ${TodoEntity.TABLE_NAME} ORDER BY ${TodoEntity.COLUME_UPDATE_TIME} DESC")
-    abstract fun allItems(limit: Int = Int.MAX_VALUE): List<TodoEntity>
+    abstract fun allItems(): List<TodoEntity>
 
     @Query("SELECT COUNT(*) FROM ${TodoEntity.TABLE_NAME}")
     abstract fun todoItems(): Int
