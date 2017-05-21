@@ -1,17 +1,15 @@
-package io.github.landerlyoung.awesometodo
+package io.github.landerlyoung.awesometodo.test
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.TextView
-import io.github.landerlyoung.awesometodo.arch.ui.TodoActivity
-import io.github.landerlyoung.awesometodo.test.KotlinTest
+import io.github.landerlyoung.awesometodo.R
 
-class MainActivity : AppCompatActivity() {
+class TestActivity : AppCompatActivity() {
     companion object {
-        const val TAG = "MainActivity"
+        const val TAG = "TestActivity"
     }
 
     private var log: TextView? = null
@@ -33,11 +31,6 @@ class MainActivity : AppCompatActivity() {
         log = findViewById(R.id.log) as? TextView
         findViewById(R.id.run_test)?.setOnClickListener {
             runTest()
-        }
-
-        findViewById(R.id.run_demo)?.setOnClickListener {
-            val intent = Intent(this, TodoActivity::class.java)
-            startActivity(intent)
         }
 
         runTest()
