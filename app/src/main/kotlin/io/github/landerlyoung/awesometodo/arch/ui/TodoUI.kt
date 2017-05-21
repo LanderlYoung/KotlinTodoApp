@@ -3,6 +3,7 @@ package io.github.landerlyoung.awesometodo.arch.ui
 import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.support.design.widget.Snackbar
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -40,6 +41,8 @@ object TodoUI {
 
         // dual-bind check-box
         done?.isChecked = viewMode.newItemDone.get()
+        add?.isEnabled = !viewMode.newItemName.get().isNullOrEmpty()
+
         done?.setOnCheckedChangeListener({ _, isChecked ->
             viewMode.newItemDone.set(isChecked)
         })
@@ -58,6 +61,7 @@ object TodoUI {
 
                 if (old != newString) {
                     viewMode.newItemName.set(newString)
+                    add?.isEnabled = !newString.isNullOrEmpty()
                 }
             }
 
@@ -67,10 +71,17 @@ object TodoUI {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
+
+        val addNewItem: () -> Unit = {
+            if (!viewMode.addNewItem()) {
+                Snackbar.make(newItem!!, "Item Already Exist", Snackbar.LENGTH_SHORT)
+                        .show()
+            }
+        }
         newItem?.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEND -> {
-                    viewMode.addNewItem()
+                    addNewItem()
                     true
                 }
                 else -> false
@@ -90,9 +101,7 @@ object TodoUI {
         })
 
         // bind click
-        add?.setOnClickListener({ _ ->
-            viewMode.addNewItem()
-        })
+        add?.setOnClickListener({ _ -> addNewItem() })
 
         return rootView
     }

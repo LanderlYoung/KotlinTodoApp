@@ -1,9 +1,8 @@
 package io.github.landerlyoung.awesometodo
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.TextView
@@ -16,14 +15,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var log: TextView? = null
-    private var someDialog: Lazy<Dialog> = lazy {
+    private val testSnackbar: Snackbar? by lazy {
+        Log.i(TAG, "lazy create some snackbar")
 
-        Log.i(TAG, "lazy create some Dialog")
-
-        AlertDialog.Builder(this)
-                .setMessage("test finished")
-                .setPositiveButton("ok", null)
-                .create()
+        val logView = log
+        if (logView != null) {
+            Snackbar.make(logView, "Run test finished", Snackbar.LENGTH_SHORT)
+        } else {
+            null
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,10 +39,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, TodoActivity::class.java)
             startActivity(intent)
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         runTest()
     }
 
@@ -51,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         test.run()
         log?.text = test.logMsg
 
-        someDialog.value.show()
+        testSnackbar?.show()
     }
-
 }

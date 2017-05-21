@@ -36,7 +36,7 @@ object TodoItemViewUI {
         // dual-bind check-box
         done?.isChecked = viewMode.done.get()
         done?.setOnCheckedChangeListener({ _, isChecked ->
-            viewMode.done.set(isChecked)
+            viewMode.setItemDone(isChecked)
         })
         viewMode.done.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(p0: Observable?, p1: Int) {

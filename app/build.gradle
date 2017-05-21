@@ -52,8 +52,12 @@ dependencies {
     // yeah! kotlin here
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    compile "com.android.support:support-v4:25.3.1"
-    compile "com.android.support:recyclerview-v7:25.3.1"
+    def supportVersion = '25.3.1'
+    compile "com.android.support:support-v4:${supportVersion}"
+    compile "com.android.support:recyclerview-v7:${supportVersion}"
+    compile "com.android.support:design:${supportVersion}"
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // google android architecture component
     def archVersion = '1.0.0-alpha1'
@@ -73,6 +77,5 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
 }

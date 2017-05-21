@@ -28,6 +28,7 @@ import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoViewModel
 class TodoFragment : Fragment(), LifecycleRegistryOwner {
     private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
     private lateinit var adapter: Adapter
+    private lateinit var todoViewMode: TodoViewModel
 
     override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
 
@@ -37,6 +38,8 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
 
         val vm = ViewModelProviders.of(this).get(TodoViewModel::class.java)
         val view = TodoUI.inflate(inflater, container, false, vm)
+
+        todoViewMode = vm
         lifecycleRegistry.addObserver(vm)
         adapter = Adapter()
         adapter.todoItems.addAll(vm.allItems)
@@ -70,7 +73,7 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
                     }
 
                     override fun onItemRangeChanged(list: ObservableArrayList<TodoEntity>, index: Int, count: Int) {
-                        for (pos in index..(index + count)) {
+                        for (pos in index until (index + count)) {
                             adapter.todoItems[pos] = list[pos]
                         }
                         adapter.notifyItemRangeChanged(index, count)
@@ -86,7 +89,7 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
         val todoItems: MutableList<TodoEntity> = mutableListOf()
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-            val vm = TodoItemViewModel(activity.application)
+            val vm = TodoItemViewModel(activity.application, todoViewMode)
             val view = TodoItemViewUI.inflate(
                     LayoutInflater.from(context),
                     parent,

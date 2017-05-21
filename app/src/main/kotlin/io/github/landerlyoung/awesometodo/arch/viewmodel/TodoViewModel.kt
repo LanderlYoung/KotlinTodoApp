@@ -32,24 +32,54 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
     val newItemDone = ObservableBoolean()
     val allItems = ObservableArrayList<TodoEntity>()
 
-    fun addNewItem() {
+    fun addNewItem(): Boolean {
+        if (allItems.indexOfFirst { it.name == newItemName.get() } != -1) {
+            return false
+        }
         val entity = TodoEntity(newItemName.get(), newItemDone.get())
 
         Observable.just(entity)
-                .subscribeOn(this.getApplication<AwesomeApplication>().ioScheduler)
-                .subscribe({ entity ->
+                .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
+                .subscribe { entity ->
                     todoDao.addItem(entity)
-                })
+                }
 
         allItems.add(entity)
 
         newItemName.set(null)
         newItemDone.set(false)
+        return true
+    }
+
+    fun modifyItem(name: String, done: Boolean) {
+        val index = allItems.indexOfFirst { it.name == name }
+        val item = if (index != -1) allItems[index] else null
+        item?.let {
+            val newItem = item.copy(done = done, updateTimeMillis = System.currentTimeMillis())
+
+            // update memory cache
+            allItems[index] = newItem
+
+            // update db
+            Observable.just(newItem)
+                    .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
+                    .subscribe {
+                        todoDao.updateItem(it)
+                    }
+        }
+    }
+
+    fun removeItem(index: Int): Boolean {
+        return false
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchData() {
-        todoDao.allItems()
+        Observable.create<List<TodoEntity>> {
+            it.onNext(todoDao.allItems())
+            it.onComplete()
+        }
+                .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { items ->
                     allItems.clear()

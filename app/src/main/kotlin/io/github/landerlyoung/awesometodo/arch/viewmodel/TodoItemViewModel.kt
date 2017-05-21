@@ -13,7 +13,17 @@ import android.databinding.ObservableField
  * Life with Passion, Code with Creativity.
  * </pre>
  */
-class TodoItemViewModel(application: Application) : AndroidViewModel(application) {
-    val name = ObservableField<CharSequence>()
+class TodoItemViewModel(application: Application, private val todoViewModel: TodoViewModel)
+    : AndroidViewModel(application) {
+
+    val name = ObservableField<String>()
     val done = ObservableBoolean()
+
+    fun setItemDone(done: Boolean) {
+        if (done != this.done.get()) {
+//            this.done.set(done)
+
+            todoViewModel.modifyItem(name.get(), done)
+        }
+    }
 }
