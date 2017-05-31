@@ -8,9 +8,9 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import io.github.landerlyoung.awesometodo.AwesomeApplication
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
+import io.github.landerlyoung.awesometodo.rx.Sched
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 
@@ -49,7 +49,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
 
     private fun addNewItem(entity: TodoEntity) {
         Observable.just(entity)
-                .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
+                .subscribeOn(Sched.ioScheduler)
                 .subscribe { entity ->
                     todoDao.addItem(entity)
                 }
@@ -67,7 +67,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
 
             // update db
             Observable.just(newItem)
-                    .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
+                    .subscribeOn(Sched.ioScheduler)
                     .subscribe {
                         todoDao.updateItem(it)
                     }
@@ -79,7 +79,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
 
 
         Observable.just(entity)
-                .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
+                .subscribeOn(Sched.ioScheduler)
                 .subscribe {
                     todoDao.deleteItem(entity)
                 }
@@ -92,7 +92,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
             it.onNext(todoDao.allItems())
             it.onComplete()
         }
-                .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
+                .subscribeOn(Sched.ioScheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { items ->
                     allItems.clear()

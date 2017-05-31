@@ -1,7 +1,6 @@
 package io.github.landerlyoung.awesometodo
 
 import android.app.Application
-import io.reactivex.internal.schedulers.IoScheduler
 
 /**
  * <pre>
@@ -11,6 +10,5 @@ import io.reactivex.internal.schedulers.IoScheduler
  * Life with Passion, Code with Creativity.
  * </pre>
  */
-class AwesomeApplication : Application() {
-    val ioScheduler = IoScheduler()
-}
+
+class AwesomeApplication : Application()
