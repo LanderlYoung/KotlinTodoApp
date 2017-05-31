@@ -38,17 +38,21 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
         }
         val entity = TodoEntity(newItemName.get(), newItemDone.get())
 
-        Observable.just(entity)
-                .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
-                .subscribe { entity ->
-                    todoDao.addItem(entity)
-                }
+        addNewItem(entity)
 
         allItems.add(0, entity)
 
         newItemName.set(null)
         newItemDone.set(false)
         return true
+    }
+
+    private fun addNewItem(entity: TodoEntity) {
+        Observable.just(entity)
+                .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
+                .subscribe { entity ->
+                    todoDao.addItem(entity)
+                }
     }
 
     fun modifyItem(name: String, done: Boolean) {
@@ -72,6 +76,8 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
 
     fun removeItem(index: Int): Boolean {
         val entity = allItems.removeAt(index)
+
+
         Observable.just(entity)
                 .subscribeOn(getApplication<AwesomeApplication>().ioScheduler)
                 .subscribe {

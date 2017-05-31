@@ -8,6 +8,7 @@ import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.thread
 import kotlin.concurrent.withLock
+import kotlin.system.measureTimeMillis
 
 /**
  * <pre>
@@ -73,9 +74,24 @@ open class KotlinTest {
     }
 
     fun inlineLambda() {
+        // no inline
         thread {
+            //return not allowed
+
+            // return out lambda
             return@thread
         }
+        // inline
+        listOf("one", "two", "three")
+                .filter { it != "three" }
+                .forEach {
+                    if (it == "one") {
+                        // return inlineLambda method
+                        //return
+
+                        return@forEach
+                    }
+                }
 
     }
 
@@ -151,6 +167,7 @@ open class KotlinTest {
         }
 
         rsp?.showInfo?.show?.showId?.let { id ->
+            println("")
 
         }
     }
@@ -163,6 +180,13 @@ open class KotlinTest {
 
     inline fun <reified T> className(): String {
         return T::class.java.simpleName
+    }
+
+    fun timing() {
+        val time = measureTimeMillis {
+            // do some work
+        }
+        println("do some work cost ${time}ms")
     }
 
     @Test
