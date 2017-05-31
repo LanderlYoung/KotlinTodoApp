@@ -94,7 +94,7 @@ object TodoUI {
         }
 
         viewMode.newItemName.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-            @Suppress("UncheckedCast")
+            @Suppress("UNCHECKED_CAST")
             override fun onPropertyChanged(p0: Observable?, p1: Int) {
                 val newString = (p0 as ObservableField<String>).get()
                 val old = newItem?.text.toString()

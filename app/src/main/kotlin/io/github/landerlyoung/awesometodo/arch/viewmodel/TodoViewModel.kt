@@ -10,9 +10,11 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
+import io.github.landerlyoung.awesometodo.kotlin.extension.ui
 import io.github.landerlyoung.awesometodo.rx.Sched
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 /**
  * <pre>
@@ -88,16 +90,17 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchData() {
-        Observable.create<List<TodoEntity>> {
-            it.onNext(todoDao.allItems())
-            it.onComplete()
-        }
-                .subscribeOn(Sched.ioScheduler)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { items ->
-                    allItems.clear()
-                    allItems.addAll(items)
+        // elegant async task
+        ui {
+            doAsync {
+                val allItems = todoDao.allItems()
+
+                uiThread {
+                    this@TodoViewModel.allItems.clear()
+                    this@TodoViewModel.allItems.addAll(allItems)
                 }
+            }
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

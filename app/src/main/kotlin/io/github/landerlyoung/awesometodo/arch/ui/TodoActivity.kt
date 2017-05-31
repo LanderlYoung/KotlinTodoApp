@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import io.github.landerlyoung.awesometodo.test.TestActivity
+import io.github.landerlyoung.awesometodo.test.android.TestActivity
 
 class TodoActivity : AppCompatActivity() {
 
