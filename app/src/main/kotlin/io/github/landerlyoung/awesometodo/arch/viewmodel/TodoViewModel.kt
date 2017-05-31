@@ -10,7 +10,7 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
-import io.github.landerlyoung.awesometodo.kotlin.extension.ui
+import io.github.landerlyoung.awesometodo.kotlin.extension.or
 import io.github.landerlyoung.awesometodo.rx.Sched
 import io.reactivex.Observable
 import org.jetbrains.anko.doAsync
@@ -79,26 +79,31 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
     fun removeItem(index: Int): Boolean {
         val entity = allItems.removeAt(index)
 
-
         Observable.just(entity)
                 .subscribeOn(Sched.ioScheduler)
                 .subscribe {
                     todoDao.deleteItem(entity)
                 }
+
+        or {
+            doAsync {
+                todoDao.deleteItem(entity)
+            }
+        }
+
         return false
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchData() {
         // elegant async task
-        ui {
-            doAsync {
-                val allItems = todoDao.allItems()
+        // weak ref, no memory leak
+        doAsync {
+            val allItems = todoDao.allItems()
 
-                uiThread {
-                    this@TodoViewModel.allItems.clear()
-                    this@TodoViewModel.allItems.addAll(allItems)
-                }
+            uiThread {
+                this@TodoViewModel.allItems.clear()
+                this@TodoViewModel.allItems.addAll(allItems)
             }
         }
     }
