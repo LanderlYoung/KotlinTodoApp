@@ -8,11 +8,14 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.util.Log
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
 import io.github.landerlyoung.awesometodo.kotlin.extension.or
 import io.github.landerlyoung.awesometodo.rx.Sched
 import io.reactivex.Observable
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -76,6 +79,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
         }
     }
 
+    // Async method useing RxJava
     fun removeItem(index: Int): Boolean {
         val entity = allItems.removeAt(index)
 
@@ -84,29 +88,49 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
                 .subscribe {
                     todoDao.deleteItem(entity)
                 }
-
-        or {
-            doAsync {
-                todoDao.deleteItem(entity)
-            }
-        }
-
         return false
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchData() {
+
+        getAllItems_Coroutines()
+
+        or {
+            getAllItems_AnkoAsync()
+        }
+
+        or {
+
+        }
+    }
+
+    // Asnc method call use anko
+    // async task style
+    private fun getAllItems_AnkoAsync() {
         // elegant async task
         // weak ref, no memory leak
         doAsync {
+            // do in the back ground
             val allItems = todoDao.allItems()
 
+            // post to ui thread
             uiThread {
                 this@TodoViewModel.allItems.clear()
                 this@TodoViewModel.allItems.addAll(allItems)
             }
         }
     }
+
+    private fun getAllItems_Coroutines() = launch(UI) {
+        // magic happens!
+        val items = todoDao.allItemsCoroutine().await()
+
+        Log.i("young", "getAllItems_Coroutines:" + Thread.currentThread().name)
+        allItems.clear()
+        allItems.addAll(items)
+    }
+
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun release() {

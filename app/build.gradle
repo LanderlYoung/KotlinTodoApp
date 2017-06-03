@@ -60,6 +60,7 @@ dependencies {
 
     // coroutines
     compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.15'
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.15'
 
     // anko
     compile "org.jetbrains.anko:anko-sdk25:$anko_version"

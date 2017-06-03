@@ -1,6 +1,10 @@
 package io.github.landerlyoung.awesometodo.arch.data
 
 import android.arch.persistence.room.*
+import android.util.Log
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.async
 
 /**
  * <pre>
@@ -29,4 +33,9 @@ abstract class TodoDao {
     @Query("SELECT COUNT(*) FROM ${TodoEntity.TABLE_NAME}")
     abstract fun todoItems(): Int
 
+    suspend fun allItemsCoroutine(): Deferred<List<TodoEntity>> = async(CommonPool) {
+        Log.i("young", "allItemsCoroutine:" + Thread.currentThread().name)
+
+        allItems()
+    }
 }
