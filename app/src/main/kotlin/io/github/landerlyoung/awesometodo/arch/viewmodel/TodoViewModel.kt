@@ -122,6 +122,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
         }
     }
 
+    // 协程！ 协程！ 协程！
     private fun getAllItems_Coroutines() = launch(UI) {
         // magic happens!
         val items = todoDao.allItemsCoroutine().await()
