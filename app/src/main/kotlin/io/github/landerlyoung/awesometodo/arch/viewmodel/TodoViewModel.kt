@@ -111,13 +111,13 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
         withWeak(this) {
             object : AsyncTask<Unit, Unit, List<TodoEntity>>() {
                 override fun doInBackground(vararg params: Unit?): List<TodoEntity>? {
-                    return thiz?.run {
+                    return weakThis?.run {
                         todoDao.allItems()
                     }
                 }
 
                 override fun onPostExecute(result: List<TodoEntity>?) {
-                    thiz?.run {
+                    weakThis?.run {
                         if (result != null) {
                             allItems.addAll(result)
                         }
@@ -130,14 +130,14 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
     private fun getAllItems_RxJava() {
         withWeak(this) {
             Observable.create<List<TodoEntity>> { emitter ->
-                thiz?.run {
+                weakThis?.run {
                     emitter.onNext(todoDao.allItems())
                 }
                 emitter.onComplete()
             }
                     .subscribeOn(Sched.ioScheduler)
                     .subscribe { items ->
-                        thiz?.run {
+                        weakThis?.run {
                             allItems.addAll(items)
                         }
                     }

@@ -16,6 +16,6 @@ inline fun <T> withWeak(thiz: T, block: WeakContext<T>.() -> Unit) {
 }
 
 class WeakContext<out T>(context: T) {
-    private val weakThiz = WeakReference(context)
-    val thiz: T? get() = weakThiz.get()
+    private val _weakThis = WeakReference(context)
+    val weakThis: T? get() = _weakThis.get()
 }
