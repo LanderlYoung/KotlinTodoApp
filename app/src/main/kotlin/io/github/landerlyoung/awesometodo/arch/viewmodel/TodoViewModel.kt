@@ -1,5 +1,6 @@
 package io.github.landerlyoung.awesometodo.arch.viewmodel
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.Lifecycle
@@ -8,10 +9,12 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.os.AsyncTask
 import android.util.Log
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
 import io.github.landerlyoung.awesometodo.kotlin.extension.or
+import io.github.landerlyoung.awesometodo.kotlin.extension.withWeak
 import io.github.landerlyoung.awesometodo.rx.Sched
 import io.reactivex.Observable
 import kotlinx.coroutines.experimental.android.UI
@@ -96,12 +99,48 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
 
         getAllItems_Coroutines()
 
-        or {
-            getAllItems_AnkoAsync()
+        or { getAllItems_AnkoAsync() }
+
+        or { getAllItems_RxJava() }
+
+        or { getAllItems_AsyncTask() }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private fun getAllItems_AsyncTask() {
+        withWeak(this) {
+            object : AsyncTask<Unit, Unit, List<TodoEntity>>() {
+                override fun doInBackground(vararg params: Unit?): List<TodoEntity>? {
+                    return thiz?.run {
+                        todoDao.allItems()
+                    }
+                }
+
+                override fun onPostExecute(result: List<TodoEntity>?) {
+                    thiz?.run {
+                        if (result != null) {
+                            allItems.addAll(result)
+                        }
+                    }
+                }
+            }.execute(Unit)
         }
+    }
 
-        or {
-
+    private fun getAllItems_RxJava() {
+        withWeak(this) {
+            Observable.create<List<TodoEntity>> { emitter ->
+                thiz?.run {
+                    emitter.onNext(todoDao.allItems())
+                }
+                emitter.onComplete()
+            }
+                    .subscribeOn(Sched.ioScheduler)
+                    .subscribe { items ->
+                        thiz?.run {
+                            allItems.addAll(items)
+                        }
+                    }
         }
     }
 
@@ -116,7 +155,6 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
 
             // post to ui thread
             uiThread {
-                this@TodoViewModel.allItems.clear()
                 this@TodoViewModel.allItems.addAll(allItems)
             }
         }
