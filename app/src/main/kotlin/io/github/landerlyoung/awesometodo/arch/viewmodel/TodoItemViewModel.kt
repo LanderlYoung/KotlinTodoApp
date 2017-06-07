@@ -21,8 +21,6 @@ class TodoItemViewModel(application: Application, private val todoViewModel: Tod
 
     fun setItemDone(done: Boolean) {
         if (done != this.done.get()) {
-//            this.done.set(done)
-
             todoViewModel.modifyItem(name.get(), done)
         }
     }

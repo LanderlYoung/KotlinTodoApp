@@ -51,7 +51,6 @@ class TestActivity : AppCompatActivity() {
         val test = KotlinTest()
         test.run()
         log.text = test.logMsg
-
         testSnackbar?.show()
     }
 }
