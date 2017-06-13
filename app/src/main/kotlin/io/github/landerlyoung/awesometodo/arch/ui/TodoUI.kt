@@ -6,6 +6,7 @@ import android.databinding.ObservableField
 import android.support.design.widget.Snackbar
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +72,6 @@ object TodoUI {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
-
         val addNewItem: () -> Unit = {
             if (!viewMode.newItemName.get().isNullOrBlank()) {
                 if (!viewMode.addNewItem()) {
@@ -83,6 +83,17 @@ object TodoUI {
                         .show()
             }
         }
+
+        newItem?.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                if (!newItem.text.isNullOrEmpty()) {
+                    addNewItem()
+                    return@setOnKeyListener true
+                }
+            }
+            false
+        }
+
         newItem?.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEND -> {
