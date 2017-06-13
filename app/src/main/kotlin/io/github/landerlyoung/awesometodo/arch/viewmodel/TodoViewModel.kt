@@ -149,13 +149,14 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
     private fun getAllItems_AnkoAsync() {
         // elegant async task
         // weak ref, no memory leak
+        val dao = todoDao
         doAsync {
             // do in the back ground
-            val allItems = todoDao.allItems()
+            val allItems = dao.allItems()
 
             // post to ui thread
-            uiThread {
-                this@TodoViewModel.allItems.addAll(allItems)
+            uiThread { thiz ->
+                thiz.allItems.addAll(allItems)
             }
         }
     }
@@ -169,7 +170,6 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
         allItems.clear()
         allItems.addAll(items)
     }
-
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun release() {

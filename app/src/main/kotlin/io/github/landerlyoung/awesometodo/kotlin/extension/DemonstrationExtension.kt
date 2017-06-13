@@ -9,8 +9,5 @@ package io.github.landerlyoung.awesometodo.kotlin.extension
  * </pre>
  */
 
-inline fun <T> T.or(block: T.() -> Unit) {
-    if (false) {
-        this.block()
-    }
+inline fun or(block: () -> Unit) {
 }

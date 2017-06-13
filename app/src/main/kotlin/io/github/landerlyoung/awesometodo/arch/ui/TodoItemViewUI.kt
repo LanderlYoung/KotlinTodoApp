@@ -47,7 +47,7 @@ object TodoItemViewUI {
         // dual-bind edit-text
         name?.text = viewMode.name.get()
         viewMode.name.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-            @Suppress("UncheckedCast")
+            @Suppress("UNCHECKED_CAST")
             override fun onPropertyChanged(p0: Observable?, p1: Int) {
                 val newString = (p0 as ObservableField<String>).get()
                 val old = name?.text.toString()
