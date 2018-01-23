@@ -14,14 +14,14 @@ import android.content.Context
  * </pre>
  */
 @Database(
-        entities = arrayOf(TodoEntity::class),
+        entities = [(TodoEntity::class)],
         version = 1
 )
 abstract class TodoDataBase : RoomDatabase() {
     abstract fun todoDao(): TodoDao
 
     companion object {
-        const val DB_NAME = "todo.db"
+        private const val DB_NAME = "todo.db"
 
         fun getOrCreateDb(context: Context): TodoDataBase =
                 Room.databaseBuilder(context, TodoDataBase::class.java, DB_NAME).build()

@@ -1,7 +1,7 @@
 package io.github.landerlyoung.awesometodo.arch.ui
 
-import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableList
 import android.os.Bundle
@@ -16,6 +16,7 @@ import io.github.landerlyoung.awesometodo.R
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
 import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoItemViewModel
 import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoViewModel
+import io.github.landerlyoung.awesometodo.databinding.ActivityTodoBinding
 
 /**
  * <pre>
@@ -26,27 +27,26 @@ import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoViewModel
  * </pre>
  */
 class TodoFragment : Fragment() {
-    private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
     private lateinit var adapter: Adapter
     private lateinit var todoViewMode: TodoViewModel
-
-    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         val vm = ViewModelProviders.of(activity!!).get(TodoViewModel::class.java)
-        val view = TodoUI.inflate(inflater, container, false, vm)
+        val binding: ActivityTodoBinding = DataBindingUtil.inflate(inflater, R.layout.activity_todo, container, false)
+
+        binding.viewModel = vm
 
         todoViewMode = vm
-        lifecycleRegistry.addObserver(vm)
+        lifecycle.addObserver(vm)
         adapter = Adapter()
         adapter.todoItems.addAll(vm.allItems)
 
-        val recyclerView = view.findViewById(R.id.recycler_view) as? RecyclerView
-        recyclerView?.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        recyclerView?.adapter = adapter
+        val recyclerView = binding.recyclerView
+        recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        recyclerView.adapter = adapter
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
                 0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
             override fun onMove(p0: RecyclerView?, p1: RecyclerView.ViewHolder?, p2: RecyclerView.ViewHolder?): Boolean {

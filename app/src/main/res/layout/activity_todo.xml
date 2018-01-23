@@ -68,7 +68,6 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/split_line"
             android:layout_marginTop="16dp"
-
             app:layoutManager="LinearLayoutManager"
             />
 

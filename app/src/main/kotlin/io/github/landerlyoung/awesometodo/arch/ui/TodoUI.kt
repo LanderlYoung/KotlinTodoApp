@@ -24,6 +24,7 @@ import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoViewModel
  * Time:   13:29
  * Life with Passion, Code with Creativity.
  * </pre>
+ * data-binding reused, manual binding code for compare only
  */
 object TodoUI {
     fun inflate(inflater: LayoutInflater,
