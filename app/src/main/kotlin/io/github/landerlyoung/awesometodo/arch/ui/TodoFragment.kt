@@ -90,7 +90,7 @@ class TodoFragment : Fragment() {
                     }
                 })
 
-        return view
+        return binding.root
     }
 
     private class ViewHolder(view: View, val vm: TodoItemViewModel) : RecyclerView.ViewHolder(view)
