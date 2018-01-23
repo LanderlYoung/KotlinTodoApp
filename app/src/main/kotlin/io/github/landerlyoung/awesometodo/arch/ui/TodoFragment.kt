@@ -1,7 +1,6 @@
 package io.github.landerlyoung.awesometodo.arch.ui
 
 import android.arch.lifecycle.LifecycleRegistry
-import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableList
@@ -26,7 +25,7 @@ import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoViewModel
  * Life with Passion, Code with Creativity.
  * </pre>
  */
-class TodoFragment : Fragment(), LifecycleRegistryOwner {
+class TodoFragment : Fragment() {
     private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
     private lateinit var adapter: Adapter
     private lateinit var todoViewMode: TodoViewModel
@@ -37,7 +36,7 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val vm = ViewModelProviders.of(this).get(TodoViewModel::class.java)
+        val vm = ViewModelProviders.of(activity!!).get(TodoViewModel::class.java)
         val view = TodoUI.inflate(inflater, container, false, vm)
 
         todoViewMode = vm
@@ -100,7 +99,7 @@ class TodoFragment : Fragment(), LifecycleRegistryOwner {
         val todoItems: MutableList<TodoEntity> = mutableListOf()
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-            val vm = TodoItemViewModel(activity.application, todoViewMode)
+            val vm = TodoItemViewModel(activity!!.application, todoViewMode)
             val view = TodoItemViewUI.inflate(
                     LayoutInflater.from(context),
                     parent,

@@ -28,13 +28,13 @@ import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoViewModel
 object TodoUI {
     fun inflate(inflater: LayoutInflater,
                 parent: ViewGroup?,
-                attathToParent: Boolean,
+                attachToParent: Boolean,
                 viewMode: TodoViewModel): View {
 
         val rootView = inflater.inflate(
                 R.layout.activity_todo,
                 parent,
-                attathToParent)
+                attachToParent)
 
         val done = rootView.findViewById(R.id.new_item_done) as? CheckBox
         val newItem = rootView.findViewById(R.id.new_item_name) as? EditText

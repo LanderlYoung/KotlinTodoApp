@@ -55,6 +55,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
         return true
     }
 
+    @SuppressLint("CheckResult")
     private fun addNewItem(entity: TodoEntity) {
         Observable.just(entity)
                 .subscribeOn(Sched.ioScheduler)
@@ -82,7 +83,8 @@ class TodoViewModel(application: Application) : AndroidViewModel(application), L
         }
     }
 
-    // Async method useing RxJava
+    // Async method using RxJava
+    @SuppressLint("CheckResult")
     fun removeItem(index: Int): Boolean {
         val entity = allItems.removeAt(index)
 
