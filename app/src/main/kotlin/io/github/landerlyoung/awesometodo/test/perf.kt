@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-23
  * Time:   22:51
  * Life with Passion, Code with Creativity.

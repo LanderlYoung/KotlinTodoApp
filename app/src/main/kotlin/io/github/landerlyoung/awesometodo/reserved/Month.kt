@@ -2,7 +2,7 @@ package io.github.landerlyoung.awesometodo.reserved
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-06-07
  * Time:   10:47
  * Life with Passion, Code with Creativity.

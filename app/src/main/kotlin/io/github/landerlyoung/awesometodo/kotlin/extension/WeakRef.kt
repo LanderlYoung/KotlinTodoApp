@@ -4,7 +4,7 @@ import java.lang.ref.WeakReference
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-06-05
  * Time:   23:15
  * Life with Passion, Code with Creativity.

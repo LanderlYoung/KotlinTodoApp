@@ -2,7 +2,7 @@ package io.github.landerlyoung.awesometodo.test
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-22
  * Time:   21:38
  * Life with Passion, Code with Creativity.

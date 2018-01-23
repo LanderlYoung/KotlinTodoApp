@@ -6,7 +6,7 @@ import android.widget.FrameLayout
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-06-07
  * Time:   11:12
  * Life with Passion, Code with Creativity.

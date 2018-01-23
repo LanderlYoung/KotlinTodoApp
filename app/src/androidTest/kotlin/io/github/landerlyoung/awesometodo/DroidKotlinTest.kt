@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-19
  * Time:   22:58
  * Life with Passion, Code with Creativity.

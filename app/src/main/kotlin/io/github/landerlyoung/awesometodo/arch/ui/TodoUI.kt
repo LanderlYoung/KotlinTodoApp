@@ -19,7 +19,7 @@ import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoViewModel
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-21
  * Time:   13:29
  * Life with Passion, Code with Creativity.

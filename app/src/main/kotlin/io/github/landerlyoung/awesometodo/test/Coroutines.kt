@@ -8,7 +8,7 @@ import kotlin.coroutines.experimental.buildSequence
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-06-03
  * Time:   19:46
  * Life with Passion, Code with Creativity.

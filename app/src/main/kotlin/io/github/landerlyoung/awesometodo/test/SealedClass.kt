@@ -4,7 +4,7 @@ import java.util.concurrent.locks.Lock
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-23
  * Time:   00:20
  * Life with Passion, Code with Creativity.

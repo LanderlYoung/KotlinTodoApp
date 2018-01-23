@@ -24,7 +24,7 @@ import org.jetbrains.anko.uiThread
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-20
  * Time:   21:42
  * Life with Passion, Code with Creativity.

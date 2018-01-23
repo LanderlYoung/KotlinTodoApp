@@ -4,7 +4,7 @@ import io.reactivex.internal.schedulers.IoScheduler
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-31
  * Time:   23:25
  * Life with Passion, Code with Creativity.

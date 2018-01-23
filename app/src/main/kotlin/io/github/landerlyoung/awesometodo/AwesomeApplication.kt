@@ -4,7 +4,7 @@ import android.app.Application
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-21
  * Time:   14:27
  * Life with Passion, Code with Creativity.

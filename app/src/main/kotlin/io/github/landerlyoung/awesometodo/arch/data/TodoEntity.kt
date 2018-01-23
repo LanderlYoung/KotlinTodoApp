@@ -5,7 +5,7 @@ import android.arch.persistence.room.PrimaryKey
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-20
  * Time:   20:29
  * Life with Passion, Code with Creativity.

@@ -7,7 +7,7 @@ import android.databinding.ObservableField
 
 /**
  * <pre>
- * Author: taylorcyang@tencent.com
+ * Author: landerlyoung@gmail.com
  * Date:   2017-05-20
  * Time:   22:47
  * Life with Passion, Code with Creativity.
