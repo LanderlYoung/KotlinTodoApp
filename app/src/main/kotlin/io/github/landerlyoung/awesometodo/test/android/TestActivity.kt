@@ -1,11 +1,13 @@
 package io.github.landerlyoung.awesometodo.test.android
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
+import io.github.landerlyoung.awesometodo.paging.PagingActivity
 import io.github.landerlyoung.awesometodo.test.KotlinTest
 import org.jetbrains.anko.*
 
@@ -39,6 +41,14 @@ class TestActivity : AppCompatActivity() {
 
                     setOnClickListener {
                         runTest()
+                    }
+                }
+
+                button("Paging Activity") {
+                    lparams(matchParent, wrapContent)
+
+                    setOnClickListener {
+                        startActivity(Intent(this@TestActivity, PagingActivity::class.java))
                     }
                 }
             }
