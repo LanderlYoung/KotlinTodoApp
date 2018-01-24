@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.recyclerview.extensions.DiffCallback
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -56,9 +57,9 @@ class PagingActivity : AppCompatActivity() {
             .build()
 
     private fun keyedDataSource() = object : PageKeyedDataSource<String, String>() {
-        private val keyList = mutableListOf<String?>(null)
-
         override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, String>) {
+            Log.i(TAG, "loadAfter ${params.key}")
+
             val pageIndex = Integer.parseInt(params.key.split("-")[1])
 
             callback.onResult(
@@ -69,10 +70,15 @@ class PagingActivity : AppCompatActivity() {
         }
 
         override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, String>) {
-            TODO()
+            Log.i(TAG, "loadBefore ${params.key}")
+
+            // we can't load before
+            callback.onResult(listOf(), null)
         }
 
         override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, String>) {
+            Log.i(TAG, "loadInitial")
+
             callback.onResult(
                     (0 until 10).map {
                         "page-0 item $it"
@@ -80,5 +86,9 @@ class PagingActivity : AppCompatActivity() {
                     null,
                     "page-1")
         }
+    }
+
+    companion object {
+        const val TAG = "PagingActivity"
     }
 }
