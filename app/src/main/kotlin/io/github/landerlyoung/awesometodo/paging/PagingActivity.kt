@@ -5,6 +5,7 @@ import android.arch.paging.PageKeyedDataSource
 import android.arch.paging.PagedList
 import android.arch.paging.PagedListAdapter
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.recyclerview.extensions.DiffCallback
 import android.support.v7.widget.RecyclerView
@@ -56,17 +57,22 @@ class PagingActivity : AppCompatActivity() {
             .setInitialKey(null)
             .build()
 
+    val h = Handler()
+
     private fun keyedDataSource() = object : PageKeyedDataSource<String, String>() {
         override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, String>) {
             Log.i(TAG, "loadAfter ${params.key}")
 
             val pageIndex = Integer.parseInt(params.key.split("-")[1])
 
+            h.postDelayed({
+
             callback.onResult(
                     (0 until 10).map {
                         "${params.key} item $it"
                     },
                     "page-${pageIndex + 1}")
+            }, 2000)
         }
 
         override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, String>) {
