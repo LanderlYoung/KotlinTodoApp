@@ -2,11 +2,11 @@ package io.github.landerlyoung.awesometodo.arch.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.arch.lifecycle.*
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.lifecycle.*
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import io.github.landerlyoung.awesometodo.arch.data.TodoDataBase
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
 import io.github.landerlyoung.awesometodo.rx.Sched

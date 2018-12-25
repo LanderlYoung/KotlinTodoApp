@@ -1,9 +1,9 @@
 package io.github.landerlyoung.awesometodo.arch.ui
 
-import android.databinding.Observable
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
-import android.support.design.widget.Snackbar
+import androidx.databinding.Observable
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import com.google.android.material.snackbar.Snackbar
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent

@@ -1,15 +1,15 @@
 package io.github.landerlyoung.awesometodo.paging
 
 import android.annotation.SuppressLint
-import android.arch.core.executor.ArchTaskExecutor
-import android.arch.paging.PageKeyedDataSource
-import android.arch.paging.PagedList
-import android.arch.paging.PagedListAdapter
+import androidx.arch.core.executor.ArchTaskExecutor
+import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagedList
+import androidx.paging.PagedListAdapter
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,8 +25,8 @@ class PagingActivity : AppCompatActivity() {
         keyedPaging(findViewById(R.id.recycler_view))
     }
 
-    private fun keyedPaging(recyclerView: RecyclerView) {
-        val adapter = object : PagedListAdapter<String, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<String>() {
+    private fun keyedPaging(recyclerView: androidx.recyclerview.widget.RecyclerView) {
+        val adapter = object : PagedListAdapter<String, androidx.recyclerview.widget.RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<String>() {
             override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
                 return oldItem == newItem
             }
@@ -35,13 +35,13 @@ class PagingActivity : AppCompatActivity() {
                 return oldItem == newItem
             }
         }) {
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
                 val text = LayoutInflater.from(parent.context).inflate(android.R.layout.test_list_item, parent, false)
 
-                return object : RecyclerView.ViewHolder(text) {}
+                return object : androidx.recyclerview.widget.RecyclerView.ViewHolder(text) {}
             }
 
-            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
                 (holder.itemView as TextView).text = getItem(position)
             }
         }

@@ -1,6 +1,6 @@
 package io.github.landerlyoung.awesometodo.test
 
-import android.support.v4.os.TraceCompat
+import androidx.core.os.TraceCompat
 import java.io.FileInputStream
 import java.io.InputStream
 import java.util.concurrent.CompletableFuture

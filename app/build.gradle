@@ -20,7 +20,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     dataBinding {
@@ -30,7 +30,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -58,25 +58,25 @@ dependencies {
     // support data-binding for kotlin
 //    kapt "com.android.databinding:compiler:${agp_version}"
 
-    def supportVersion = '28.0.0'
-    implementation "com.android.support:support-v4:${supportVersion}"
-    implementation "com.android.support:recyclerview-v7:${supportVersion}"
-    implementation "com.android.support:design:${supportVersion}"
-    implementation "com.android.support:appcompat-v7:${supportVersion}"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    def androidx_version = '1.0.0-beta01'
+    // implementation "androidx.legacy:legacy-support-v4:${androidx_version}"
+    implementation "androidx.recyclerview:recyclerview:${androidx_version}"
+    implementation "com.google.android.material:material:${androidx_version}"
+    implementation "androidx.appcompat:appcompat:${androidx_version}"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     // google android architecture component
-    def archVersion = '1.1.1'
-    implementation "android.arch.lifecycle:extensions:${archVersion}"
-    kapt "android.arch.lifecycle:compiler:${archVersion}"
+    def archVersion = '2.0.0-beta01'
+    implementation "androidx.lifecycle:lifecycle-extensions:${archVersion}"
+    kapt "androidx.lifecycle:lifecycle-compiler:${archVersion}"
 
     // room and room-rxjava2 extension
-    implementation "android.arch.persistence.room:runtime:${archVersion}"
-    implementation "android.arch.persistence.room:rxjava2:${archVersion}"
-    kapt "android.arch.persistence.room:compiler:${archVersion}"
+    implementation "androidx.room:room-runtime:${archVersion}"
+    implementation "androidx.room:room-rxjava2:${archVersion}"
+    kapt "androidx.room:room-compiler:${archVersion}"
 
     // Paging
-    implementation "android.arch.paging:runtime:1.0.1"
+    implementation 'androidx.paging:paging-runtime:2.1.0-rc01'
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     // Because RxAndroid releases are few and far between, it is recommended you also
@@ -85,7 +85,7 @@ dependencies {
 
     // for test only
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0-alpha4', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 

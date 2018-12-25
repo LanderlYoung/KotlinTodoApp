@@ -1,8 +1,8 @@
 package io.github.landerlyoung.awesometodo.arch.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.lifecycle.ViewModel
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 
 /**
  * <pre>

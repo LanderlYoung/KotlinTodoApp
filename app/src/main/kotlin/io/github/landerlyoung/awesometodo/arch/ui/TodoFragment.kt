@@ -1,16 +1,16 @@
 package io.github.landerlyoung.awesometodo.arch.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.arch.paging.PagedList
-import android.arch.paging.PagedListAdapter
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
+import androidx.paging.PagedListAdapter
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +28,7 @@ import io.github.landerlyoung.awesometodo.databinding.ActivityTodoBinding
  * Life with Passion, Code with Creativity.
  * </pre>
  */
-class TodoFragment : Fragment() {
+class TodoFragment : androidx.fragment.app.Fragment() {
     private lateinit var adapter: Adapter
     private lateinit var todoViewMode: TodoViewModel
 
@@ -46,15 +46,15 @@ class TodoFragment : Fragment() {
         adapter = Adapter()
 
         val recyclerView = binding.recyclerView
-        recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        recyclerView.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(context, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
                 0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
-            override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
+            override fun onMove(p0: androidx.recyclerview.widget.RecyclerView, p1: androidx.recyclerview.widget.RecyclerView.ViewHolder, p2: androidx.recyclerview.widget.RecyclerView.ViewHolder): Boolean {
                 return true
             }
 
-            override fun onSwiped(v: RecyclerView.ViewHolder, dir: Int) {
+            override fun onSwiped(v: androidx.recyclerview.widget.RecyclerView.ViewHolder, dir: Int) {
                 todoViewMode.removeItem(v.adapterPosition)
             }
         }).attachToRecyclerView(recyclerView)
@@ -87,7 +87,7 @@ class TodoFragment : Fragment() {
         return binding.root
     }
 
-    private class ViewHolder(view: View, val vm: TodoItemViewModel) : RecyclerView.ViewHolder(view)
+    private class ViewHolder(view: View, val vm: TodoItemViewModel) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 
     private inner class Adapter : PagedListAdapter<TodoEntity, ViewHolder>(object :DiffUtil.ItemCallback<TodoEntity>() {
         override fun areContentsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {

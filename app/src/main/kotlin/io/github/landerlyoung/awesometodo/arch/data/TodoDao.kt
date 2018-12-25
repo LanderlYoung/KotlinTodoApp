@@ -1,8 +1,8 @@
 package io.github.landerlyoung.awesometodo.arch.data
 
-import android.arch.lifecycle.LiveData
-import android.arch.paging.DataSource
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
+import androidx.room.*
 
 /**
  * <pre>
