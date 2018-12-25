@@ -1,5 +1,6 @@
 package io.github.landerlyoung.awesometodo.arch.data
 
+import android.arch.lifecycle.LiveData
 import android.arch.paging.DataSource
 import android.arch.persistence.room.*
 
@@ -24,13 +25,16 @@ abstract class TodoDao {
     abstract fun deleteItem(item: TodoEntity)
 
     /** query all items synchronized */
-    @Query("SELECT * FROM ${TodoEntity.TABLE_NAME} ORDER BY ${TodoEntity.COLUME_UPDATE_TIME} DESC")
+    @Query("SELECT * FROM todo_entity ORDER BY updateTimeMillis DESC")
     abstract fun allItems(): List<TodoEntity>
 
-    @Query("SELECT COUNT(*) FROM ${TodoEntity.TABLE_NAME}")
+    @Query("SELECT COUNT(*) FROM todo_entity")
     abstract fun todoItems(): Int
 
-    @Query("SELECT * FROM ${TodoEntity.TABLE_NAME} ORDER BY ${TodoEntity.COLUME_UPDATE_TIME} DESC")
+    @Query("SELECT COUNT(*) FROM todo_entity")
+    abstract fun todoItemsLiveData(): LiveData<Int>
+
+    @Query("SELECT * FROM todo_entity ORDER BY updateTimeMillis DESC")
     abstract fun allItemsDataSource(): DataSource.Factory<Int, TodoEntity>
 
 }
