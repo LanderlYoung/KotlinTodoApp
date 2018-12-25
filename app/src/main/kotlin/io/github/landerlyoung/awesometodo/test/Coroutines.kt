@@ -1,10 +1,8 @@
 package io.github.landerlyoung.awesometodo.test
 
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
-import kotlin.coroutines.experimental.buildSequence
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 /**
  * <pre>
@@ -21,22 +19,22 @@ suspend fun fibonacciSeq() {
 
 }
 
-val seq = buildSequence {
-    var a = 0
-    var b = 1
-
-    yield(b)
-
-    while (true) {
-        val tmp = b
-        b += a
-        a = tmp
-        yield(b)
-    }
-}
+//val seq = buildSequence {
+//    var a = 0
+//    var b = 1
+//
+//    yield(b)
+//
+//    while (true) {
+//        val tmp = b
+//        b += a
+//        a = tmp
+//        yield(b)
+//    }
+//}
 
 fun main(args: Array<String>) = runBlocking {
-    val job = launch(CommonPool) {
+    val job = launch {
         // create new coroutine and keep a reference to its Job
         delay(1000L)
         println("World!")

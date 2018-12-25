@@ -7,7 +7,7 @@ import android.arch.paging.PagedListAdapter
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.recyclerview.extensions.DiffCallback
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -50,7 +50,7 @@ class TodoFragment : Fragment() {
         recyclerView.adapter = adapter
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
                 0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
-            override fun onMove(p0: RecyclerView?, p1: RecyclerView.ViewHolder?, p2: RecyclerView.ViewHolder?): Boolean {
+            override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
                 return true
             }
 
@@ -60,7 +60,7 @@ class TodoFragment : Fragment() {
         }).attachToRecyclerView(recyclerView)
 
         vm.allItems.observe(this, Observer { pagedList ->
-            adapter.setList(pagedList)
+            adapter.submitList(pagedList)
 
             pagedList?.addWeakCallback(null, object : PagedList.Callback() {
                 override fun onChanged(position: Int, count: Int) {
@@ -89,7 +89,7 @@ class TodoFragment : Fragment() {
 
     private class ViewHolder(view: View, val vm: TodoItemViewModel) : RecyclerView.ViewHolder(view)
 
-    private inner class Adapter : PagedListAdapter<TodoEntity, ViewHolder>(object : DiffCallback<TodoEntity?>() {
+    private inner class Adapter : PagedListAdapter<TodoEntity, ViewHolder>(object :DiffUtil.ItemCallback<TodoEntity>() {
         override fun areContentsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {
             return oldItem.name == newItem.name
         }
@@ -98,8 +98,8 @@ class TodoFragment : Fragment() {
             return oldItem == newItem
         }
     }) {
-        override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-            val vm = TodoItemViewModel(activity!!.application, todoViewMode)
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val vm = TodoItemViewModel(todoViewMode)
             val view = TodoItemViewUI.inflate(
                     LayoutInflater.from(context),
                     parent,

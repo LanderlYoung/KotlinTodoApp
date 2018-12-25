@@ -1,5 +1,6 @@
 package io.github.landerlyoung.awesometodo.paging
 
+import android.annotation.SuppressLint
 import android.arch.core.executor.ArchTaskExecutor
 import android.arch.paging.PageKeyedDataSource
 import android.arch.paging.PagedList
@@ -7,7 +8,7 @@ import android.arch.paging.PagedListAdapter
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.recyclerview.extensions.DiffCallback
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,7 +26,7 @@ class PagingActivity : AppCompatActivity() {
     }
 
     private fun keyedPaging(recyclerView: RecyclerView) {
-        val adapter = object : PagedListAdapter<String, RecyclerView.ViewHolder>(object : DiffCallback<String?>() {
+        val adapter = object : PagedListAdapter<String, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<String>() {
             override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
                 return oldItem == newItem
             }
@@ -45,15 +46,16 @@ class PagingActivity : AppCompatActivity() {
             }
         }
 
-        adapter.setList(keyedPagedList())
+        adapter.submitList(keyedPagedList())
 
         recyclerView.adapter = adapter
     }
 
+    @SuppressLint("RestrictedApi")
     private fun keyedPagedList() = PagedList.Builder<String, String>(
             keyedDataSource(), 10)
-            .setBackgroundThreadExecutor(ArchTaskExecutor.getIOThreadExecutor())
-            .setMainThreadExecutor(ArchTaskExecutor.getMainThreadExecutor())
+            .setFetchExecutor(ArchTaskExecutor.getIOThreadExecutor())
+            .setNotifyExecutor(ArchTaskExecutor.getMainThreadExecutor())
             .setInitialKey(null)
             .build()
 

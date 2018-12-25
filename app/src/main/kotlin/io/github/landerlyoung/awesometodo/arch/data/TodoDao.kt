@@ -2,10 +2,6 @@ package io.github.landerlyoung.awesometodo.arch.data
 
 import android.arch.paging.DataSource
 import android.arch.persistence.room.*
-import android.util.Log
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
 
 /**
  * <pre>
@@ -37,9 +33,4 @@ abstract class TodoDao {
     @Query("SELECT * FROM ${TodoEntity.TABLE_NAME} ORDER BY ${TodoEntity.COLUME_UPDATE_TIME} DESC")
     abstract fun allItemsDataSource(): DataSource.Factory<Int, TodoEntity>
 
-    suspend fun allItemsCoroutine(): Deferred<List<TodoEntity>> = async(CommonPool) {
-        Log.i("young", "allItemsCoroutine:" + Thread.currentThread().name)
-
-        allItems()
-    }
 }

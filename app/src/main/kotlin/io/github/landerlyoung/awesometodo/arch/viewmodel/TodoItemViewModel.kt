@@ -1,7 +1,6 @@
 package io.github.landerlyoung.awesometodo.arch.viewmodel
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 
@@ -13,15 +12,15 @@ import android.databinding.ObservableField
  * Life with Passion, Code with Creativity.
  * </pre>
  */
-class TodoItemViewModel(application: Application, private val todoViewModel: TodoViewModel)
-    : AndroidViewModel(application) {
+class TodoItemViewModel(private val todoViewModel: TodoViewModel)
+    : ViewModel() {
 
     val name = ObservableField<String>()
     val done = ObservableBoolean()
 
     fun setItemDone(done: Boolean) {
         if (done != this.done.get()) {
-            todoViewModel.modifyItem(name.get(), done)
+            todoViewModel.modifyItem(name.get() ?: "", done)
         }
     }
 }
