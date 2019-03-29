@@ -1,19 +1,16 @@
 package io.github.landerlyoung.awesometodo.arch.ui
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
-import androidx.databinding.DataBindingUtil
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ItemTouchHelper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import io.github.landerlyoung.awesometodo.R
 import io.github.landerlyoung.awesometodo.arch.data.TodoEntity
 import io.github.landerlyoung.awesometodo.arch.viewmodel.TodoItemViewModel
@@ -91,11 +88,11 @@ class TodoFragment : androidx.fragment.app.Fragment() {
 
     private inner class Adapter : PagedListAdapter<TodoEntity, ViewHolder>(object :DiffUtil.ItemCallback<TodoEntity>() {
         override fun areContentsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem == newItem
         }
 
         override fun areItemsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {
-            return oldItem == newItem
+            return oldItem.name == newItem.name
         }
     }) {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
